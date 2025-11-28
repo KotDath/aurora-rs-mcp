@@ -1,0 +1,22 @@
+# armv7hl
+[target.armv7-unknown-linux-gnueabihf]
+linker = "arm-linux-gnueabihf-gcc"
+rustflags = [
+    "-C", "link-arg=-Wl,--build-id=sha1",
+    "-C", "link-arg=-Wl,--as-needed",
+]
+
+# aarch64
+[target.aarch64-unknown-linux-gnu]
+linker = "aarch64-linux-gnu-gcc"
+rustflags = [
+    "-C", "link-arg=-Wl,--build-id=sha1",
+    "-C", "link-arg=-Wl,--as-needed",
+]
+
+# x86_64
+[target.x86_64-unknown-linux-gnu]
+rustflags = [
+    "-C", "link-arg=-Wl,--build-id=sha1",
+    "-C", "link-arg=-Wl,--as-needed",
+]
