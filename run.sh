@@ -38,6 +38,8 @@ VAR_DEVICE_KEY="$VAR_SDK/vmshare/ssh/private_keys/sdk"
 VAR_DEVICE_HOST="192.168.2.13"
 VAR_DEVICE_PORT="22"
 VAR_DEVICE_KEY="$HOME/.ssh/qtc_id"
+VAR_ARCH="armv7hl"
+VAR_TARGET="armv7-unknown-linux-gnueabihf"
 
 # Clear build
 rm -rf target
@@ -72,51 +74,51 @@ mkdir rpm/bin && cp -fr $PWD/target/$VAR_TARGET/debug/aurora-rs-mcp $PWD/rpm/bin
 $VAR_CLI services --rpmbuild "$PWD/rpm" || exit
 
 # Validate
-$VAR_CLI services --validate "$PWD/rpm/RPMS/$VAR_ARCH/com.keygenqt.aurora_rs_mcp-0.0.1-1.$VAR_ARCH.rpm" || exit
+$VAR_CLI services --validate "$PWD/rpm/RPMS/$VAR_ARCH/ru.kotdath.aurora_rs_mcp-0.0.1-1.$VAR_ARCH.rpm" || exit
 
 # Sign rpm
-$VAR_CLI services --keysign "$PWD/rpm/RPMS/$VAR_ARCH/com.keygenqt.aurora_rs_mcp-0.0.1-1.$VAR_ARCH.rpm" || exit
+$VAR_CLI services --keysign "$PWD/rpm/RPMS/$VAR_ARCH/ru.kotdath.aurora_rs_mcp-0.0.1-1.$VAR_ARCH.rpm" || exit
 
 # Remove old rmp
 ssh -o ConnectTimeout=2 \
   -i $VAR_DEVICE_KEY \
   -o StrictHostKeyChecking=no \
   -p $VAR_DEVICE_PORT defaultuser@$VAR_DEVICE_HOST \
-  "rm /home/defaultuser/Downloads/com.keygenqt.aurora_rs_mcp-0.0.1-1.$VAR_ARCH.rpm" 2>/dev/null
+  "rm /home/defaultuser/Downloads/ru.kotdath.aurora_rs_mcp-0.0.1-1.$VAR_ARCH.rpm" 2>/dev/null
 
 # Upload
 scp -P $VAR_DEVICE_PORT \
   -i $VAR_DEVICE_KEY \
-  ./rpm/RPMS/$VAR_ARCH/com.keygenqt.aurora_rs_mcp-0.0.1-1.$VAR_ARCH.rpm \
+  ./rpm/RPMS/$VAR_ARCH/ru.kotdath.aurora_rs_mcp-0.0.1-1.$VAR_ARCH.rpm \
   defaultuser@$VAR_DEVICE_HOST:/home/defaultuser/Downloads
 
 # Uninstall
-ssh -o ConnectTimeout=2 \
+ssh -o ConnectTimeout=10 \
   -i $VAR_DEVICE_KEY \
   -o StrictHostKeyChecking=no \
   -p $VAR_DEVICE_PORT defaultuser@$VAR_DEVICE_HOST \
-  "gdbus call --system --dest ru.omp.APM --object-path /ru/omp/APM --method ru.omp.APM.Remove com.keygenqt.aurora_rs_mcp '{}'"
+  "gdbus call --system --dest ru.omp.APM --object-path /ru/omp/APM --method ru.omp.APM.Remove ru.kotdath.aurora_rs_mcp '{}'"
 
 # Install
-ssh -o ConnectTimeout=2 \
+ssh -o ConnectTimeout=10 \
   -i $VAR_DEVICE_KEY \
   -o StrictHostKeyChecking=no \
   -p $VAR_DEVICE_PORT defaultuser@$VAR_DEVICE_HOST \
-  "gdbus call --system --dest ru.omp.APM --object-path /ru/omp/APM --method ru.omp.APM.Install ~/Downloads/com.keygenqt.aurora_rs_mcp-0.0.1-1.$VAR_ARCH.rpm '{}'" || exit
+  "gdbus call --system --dest ru.omp.APM --object-path /ru/omp/APM --method ru.omp.APM.Install ~/Downloads/ru.kotdath.aurora_rs_mcp-0.0.1-1.$VAR_ARCH.rpm '{}'" || exit
 
 # Delay install
 sleep 1
 
 # Run new
-ssh -o ConnectTimeout=2 \
+ssh -o ConnectTimeout=10 \
   -i $VAR_DEVICE_KEY \
   -o StrictHostKeyChecking=no \
   -p $VAR_DEVICE_PORT defaultuser@$VAR_DEVICE_HOST \
-  "runtime-manager-tool Control startDebug com.keygenqt.aurora_rs_mcp --output-to-console" || exit
+  "runtime-manager-tool Control startDebug ru.kotdath.aurora_rs_mcp --output-to-console" || exit
 
 # Run old
 # ssh -o ConnectTimeout=2 \
 #   -i $VAR_DEVICE_KEY \
 #   -o StrictHostKeyChecking=no \
 #   -p $VAR_DEVICE_PORT defaultuser@$VAR_DEVICE_HOST \
-#   "invoker --type=qt5 com.keygenqt.aurora_rs_mcp" || exit
+#   "invoker --type=qt5 ru.kotdath.aurora_rs_mcp" || exit

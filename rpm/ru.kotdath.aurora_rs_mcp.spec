@@ -1,4 +1,4 @@
-Name:       com.keygenqt.aurora_rs_mcp
+Name:       ru.kotdath.aurora_rs_mcp
 Summary:    Rust MCP server and interacts with the main interfaces of Aurora OS.
 Version:    0.0.1
 Release:    1

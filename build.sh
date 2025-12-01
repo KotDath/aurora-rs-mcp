@@ -70,9 +70,9 @@ mkdir rpm/bin && cp -fr $PWD/target/$VAR_TARGET/debug/aurora-rs-mcp $PWD/rpm/bin
 $VAR_CLI services --rpmbuild "$PWD/rpm" || exit
 
 # Validate
-$VAR_CLI services --validate "$PWD/rpm/RPMS/$ARG_ARCH/com.keygenqt.aurora_rs_mcp-0.0.1-1.$ARG_ARCH.rpm" || exit
+$VAR_CLI services --validate "$PWD/rpm/RPMS/$ARG_ARCH/ru.kotdath.aurora_rs_mcp-0.0.1-1.$ARG_ARCH.rpm" || exit
 
 # Sign rpm
-$VAR_CLI services --keysign "$PWD/rpm/RPMS/$ARG_ARCH/com.keygenqt.aurora_rs_mcp-0.0.1-1.$ARG_ARCH.rpm" || exit
+$VAR_CLI services --keysign "$PWD/rpm/RPMS/$ARG_ARCH/ru.kotdath.aurora_rs_mcp-0.0.1-1.$ARG_ARCH.rpm" || exit
 
 echo "Build completed successfully for $ARG_ARCH!"

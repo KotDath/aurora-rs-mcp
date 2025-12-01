@@ -4,9 +4,9 @@
 #include <ctime>
 #include <cstring>
 
-namespace com
+namespace ru
 {
-  namespace keygenqt
+  namespace kotdath
   {
     namespace aurora_rs_mcp
     {
@@ -26,5 +26,5 @@ namespace com
         return formatData;
       }
     } // namespace aurora_rs_mcp
-  } // namespace keygenqt
-} // namespace com
+  } // namespace kotdath
+} // namespace ru

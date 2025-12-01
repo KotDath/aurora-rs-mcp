@@ -1,9 +1,9 @@
 #include "aurora-rs-mcp/src/cxx/cpp/qnetwork/cxx_qnetwork.h"
 #include "aurora-rs-mcp/src/cxx/rust/cxx_qnetwork.rs.h"
 
-namespace com
+namespace ru
 {
-  namespace keygenqt
+  namespace kotdath
   {
     namespace aurora_rs_mcp
     {
@@ -19,7 +19,7 @@ namespace com
             return m_manager.isOnline();
         }
     } // namespace aurora_rs_mcp
-  } // namespace keygenqt
-} // namespace com
+  } // namespace kotdath
+} // namespace ru
 
 #include "cxx_qnetwork.moc"

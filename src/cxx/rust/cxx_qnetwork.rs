@@ -1,4 +1,4 @@
-#[cxx::bridge(namespace = "com::keygenqt::aurora_rs_mcp")]
+#[cxx::bridge(namespace = "ru::kotdath::aurora_rs_mcp")]
 mod ffi {
     unsafe extern "C++" {
         include!("aurora-rs-mcp/src/cxx/cpp/qnetwork/cxx_qnetwork.h");

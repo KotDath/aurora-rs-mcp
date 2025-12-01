@@ -2,9 +2,9 @@
 #include "rust/cxx.h"
 #include <memory>
 
-namespace com
+namespace ru
 {
-  namespace keygenqt
+  namespace kotdath
   {
     namespace aurora_rs_mcp
     {
@@ -19,5 +19,5 @@ namespace com
       // Create class
       std::unique_ptr<CxxFormat> new_format();
     } // namespace aurora_rs_mcp
-  } // namespace keygenqt
-} // namespace com
+  } // namespace kotdath
+} // namespace ru

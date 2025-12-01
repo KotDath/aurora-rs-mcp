@@ -2,11 +2,11 @@
 Type=Application
 Name=Aurora Rust MCP
 Comment=Rust MCP server and interacts with the main interfaces of Aurora OS.
-Icon=com.keygenqt.aurora_rs_mcp
-Exec=/usr/bin/com.keygenqt.aurora_rs_mcp
+Icon=ru.kotdath.aurora_rs_mcp
+Exec=/usr/bin/ru.kotdath.aurora_rs_mcp
 X-Nemo-Application-Type=silica-qt5
 
 [X-Application]
 Permissions=Internet;DeviceInfo
-OrganizationName=com.keygenqt
+OrganizationName=ru.kotdath
 ApplicationName=aurora_rs_mcp

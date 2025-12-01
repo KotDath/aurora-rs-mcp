@@ -24,10 +24,10 @@ impl AuroraMcpServer {
 
 #[tool_router]
 impl AuroraMcpServer {
-    #[tool(description = "Return a hello world greeting")]
-    fn hello_world(&self) -> Result<CallToolResult, McpError> {
+    #[tool(description = "Say hello to the client")]
+    fn say_hello(&self) -> Result<CallToolResult, McpError> {
         Ok(CallToolResult::success(vec![Content::text(
-            "Hello, world from Aurora-RS-MCP!",
+            "Hello from Aurora-RS-MCP!",
         )]))
     }
 
@@ -57,15 +57,16 @@ impl ServerHandler for AuroraMcpServer {
                 .build(),
             server_info: Implementation::from_build_env(),
             instructions: Some(
-                "Aurora-RS-MCP exposes MCP tools for demonstration:\n\
-                 - hello_world: Simple greeting tool\n\
-                 - get_aurora_info: Retrieve device and cache info".to_string()
+                "Aurora-RS-MCP provides access to Aurora OS system information and functionality through the MCP protocol.\
+                 Available tools:\n\
+                 - say_hello: Simple greeting tool\n\
+                 - get_aurora_info: Get Aurora OS system information".to_string()
             ),
         }
     }
 }
 
-pub async fn start_mcp_server() -> anyhow::Result<()> {
+pub async fn start_mcp_server(port: u16) -> anyhow::Result<()> {
     // Initialize logging
     tracing_subscriber::registry()
         .with(
@@ -87,10 +88,10 @@ pub async fn start_mcp_server() -> anyhow::Result<()> {
     // Setup HTTP router
     let router = axum::Router::new().nest_service("/mcp", service);
 
-    const BIND_ADDRESS: &str = "0.0.0.0:8080";
-    tracing::info!("MCP server listening on http://{}", BIND_ADDRESS);
+    let bind_address = format!("0.0.0.0:{port}");
+    tracing::info!("MCP server listening on http://{}", bind_address);
 
-    let tcp_listener = tokio::net::TcpListener::bind(BIND_ADDRESS).await?;
+    let tcp_listener = tokio::net::TcpListener::bind(&bind_address).await?;
 
     // Start the server with graceful shutdown
     println!("Aurora-RS-MCP server is running. Waiting for connections...");

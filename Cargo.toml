@@ -9,6 +9,7 @@ links = "aurora-rs-mcp"
 libc = "0.2"
 dbus = "0.9.9"
 cxx = "1.0"
+clap = { version = "4.3", features = ["derive"] }
 
 # MCP Server dependencies
 rmcp = { version = "0.9.0", features = ["server", "transport-streamable-http-server", "macros"] }

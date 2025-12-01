@@ -6,7 +6,10 @@ fn main() {
     let lib = &sysroot.join("usr/lib").to_string_lossy().to_string();
 
     // Set rustflags sysroot
-    println!("cargo:rustc-link-arg=--sysroot={}", sysroot.to_string_lossy());
+    println!(
+        "cargo:rustc-link-arg=--sysroot={}",
+        sysroot.to_string_lossy()
+    );
 
     // Set search
     println!("cargo:rustc-link-search={lib}");
@@ -24,7 +27,10 @@ fn main() {
     // Qt/cxx
     if cfg!(target_os = "linux") {
         let cpp_libs = vec!["Qt5Core", "Qt5Network"];
-        let includes: Vec<Vec<PathBuf>> = cpp_libs.iter().map(|lib| pkg_config::probe_library(lib).unwrap().include_paths).collect();
+        let includes: Vec<Vec<PathBuf>> = cpp_libs
+            .iter()
+            .map(|lib| pkg_config::probe_library(lib).unwrap().include_paths)
+            .collect();
         for bridge_name in ["format", "qnetwork"] {
             cxx_build::bridge(format!("src/cxx/rust/cxx_{bridge_name}.rs"))
                 .includes(includes.iter().flatten())
